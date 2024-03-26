@@ -1,5 +1,9 @@
 select * from sys.all_tables;
 
+create database bank_notifications;
+
+use bank_notifications;
+
 create user 'admin'@'localhost' identified by 'admin';
 
 grant all privileges on bank_notifications.* to 'admin'@'localhost';
@@ -25,61 +29,51 @@ CREATE TABLE documents (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Inserting customers
-INSERT INTO customers (customer_id, customer_name, created_at, updated_at) VALUES
-(1001, 'John Doe', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1002, 'Jane Smith', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1003, 'Alice Johnson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1004, 'Bob Williams', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1005, 'Emily Brown', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1006, 'Michael Davis', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1007, 'Sarah Martinez', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1008, 'David Anderson', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1009, 'Laura Garcia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1010, 'William Rodriguez', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+CREATE TABLE notification_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    notification_type VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
 
--- Inserting documents
-INSERT INTO documents (customer_id, document_name, expiry_time, created_at, updated_at) VALUES
--- John Doe's documents
-(1001, 'Passport', '2024-12-31', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1001, 'Driver''s License', '2024-10-15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Insert data for customers along with documents
+INSERT INTO customers (customer_id, customer_name) VALUES
+(1, 'Customer A'),
+(2, 'Customer B'),
+(3, 'Customer C'),
+(4, 'Customer D'),
+(5, 'Customer E'),
+(6, 'Customer F'),
+(7, 'Customer G'),
+(8, 'Customer H'),
+(9, 'Customer I'),
+(10, 'Customer J');
 
--- Jane Smith's documents
-(1002, 'Passport', '2025-06-30', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1002, 'Social Security Card', '2024-09-15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+-- Insert data for documents with relevant customer_id
+-- Insert data for T, T+30, T+60, T+90
+INSERT INTO documents (document_id, customer_id, document_name, expiry_time) VALUES
+(1000, 1, 'Document 0', DATE_ADD(CURDATE(), INTERVAL 0 DAY)),
+(1001, 2, 'Document 1', DATE_ADD(CURDATE(), INTERVAL 30 DAY)),
+(1002, 3, 'Document 2', DATE_ADD(CURDATE(), INTERVAL 60 DAY)),
+(1003, 4, 'Document 3', DATE_ADD(CURDATE(), INTERVAL 90 DAY)),
+-- Insert data for T-1
+(1004, 5, 'Document 4', DATE_SUB(CURDATE(), INTERVAL 1 DAY)),
+-- Insert data for T-30, T-60, T-90
+(1005, 6, 'Document 5', DATE_SUB(CURDATE(), INTERVAL 30 DAY)),
+(1006, 7, 'Document 6', DATE_SUB(CURDATE(), INTERVAL 60 DAY)),
+(1007, 8, 'Document 7', DATE_SUB(CURDATE(), INTERVAL 90 DAY)),
+-- Insert Multiple documents with different expiry date for single customer
+(1008, 9, 'Document 8', DATE_SUB(CURDATE(), INTERVAL 90 DAY)),
+(1009, 9, 'Document 9', DATE_SUB(CURDATE(), INTERVAL 30 DAY)),
+(1010, 9, 'Document 10', DATE_SUB(CURDATE(), INTERVAL 0 DAY)),
+(1011, 10, 'Document 11', DATE_SUB(CURDATE(), INTERVAL 0 DAY)),
+(1012, 10, 'Document 12', DATE_SUB(CURDATE(), INTERVAL 0 DAY));
 
--- Alice Johnson's documents
-(1003, 'Passport', '2025-03-15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1003, 'Birth Certificate', '2024-01-20', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- Bob Williams's documents
-(1004, 'Passport', '2024-08-10', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1004, 'Work Permit', '2025-05-30', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- Emily Brown's documents
-(1005, 'Passport', '2025-04-25', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1005, 'Health Insurance Card', '2024-11-12', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- Michael Davis's documents
-(1006, 'Passport', '2024-09-30', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1006, 'Voter ID Card', '2025-02-28', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- Sarah Martinez's documents
-(1007, 'Passport', '2025-10-20', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1007, 'Student ID Card', '2024-06-15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- David Anderson's documents
-(1008, 'Passport', '2024-07-22', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1008, 'Bank Statement', '2025-01-31', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- Laura Garcia's documents
-(1009, 'Passport', '2024-11-30', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1009, 'Credit Card', '2025-08-15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
--- William Rodriguez's documents
-(1010, 'Passport', '2025-02-18', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(1010, 'Utility Bill', '2024-12-05', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-select * from customers;
-
-select * from documents;
+CREATE TABLE notification_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    notification_type VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
