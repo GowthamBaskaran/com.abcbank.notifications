@@ -13,19 +13,23 @@ import java.util.Optional;
  * Service class for performing operations related to customers.
  */
 @Service
-public class CustomerService {
+public class CustomerService
+{
 
     @Autowired
     private CustomerRepository customerRepository;
+
 
     /**
      * Retrieves a list of all customers.
      *
      * @return List of Customer objects.
      */
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers()
+    {
         return customerRepository.findAll();
     }
+
 
     /**
      * Retrieves a customer by their ID.
@@ -33,9 +37,11 @@ public class CustomerService {
      * @param customerId ID of the customer to retrieve.
      * @return Optional containing the retrieved Customer object if found, empty Optional otherwise.
      */
-    public Optional<Customer> getCustomerById(Long customerId) {
+    public Optional<Customer> getCustomerById(Long customerId)
+    {
         return customerRepository.findById(customerId);
     }
+
 
     /**
      * Retrieves a list of customers with documents expiring on the specified date.
@@ -43,10 +49,11 @@ public class CustomerService {
      * @param date The date for which to retrieve customers with expiring documents.
      * @return List of Customer objects with documents expiring on the specified date.
      */
-    public List<Customer> getCustomersWithExpiringDocuments(LocalDate date) {
+    public List<Customer> getCustomersWithExpiringDocuments(LocalDate date)
+    {
         // Implement logic to fetch customers whose documents are expiring on the given date
         // You may need to query the database using customerRepository
         // Example: customerRepository.findCustomersWithExpiringDocuments(date);
-        return null; // Replace with actual implementation
+        return customerRepository.getDocumentsByDateDifference(date);
     }
 }

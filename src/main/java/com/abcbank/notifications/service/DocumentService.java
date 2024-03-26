@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DocumentService {
+public class DocumentService
+{
 
     @Autowired
     private DocumentRepository documentRepository;
 
-    public List<Document> getAllDocuments(){
+
+    public List<Document> getAllDocuments()
+    {
         return documentRepository.findAll();
     }
 }

@@ -7,7 +7,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "documents")
-public class Document {
+public class Document
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,51 +31,75 @@ public class Document {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-    public Long getDocumentId() {
+
+    public Long getDocumentId()
+    {
         return documentId;
     }
 
-    public void setDocumentId(Long documentId) {
+
+    public void setDocumentId(Long documentId)
+    {
         this.documentId = documentId;
     }
 
-    public Customer getCustomer() {
+
+    public Customer getCustomer()
+    {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+
+    public void setCustomer(Customer customer)
+    {
         this.customer = customer;
     }
 
-    public String getDocumentName() {
+
+    public String getDocumentName()
+    {
         return documentName;
     }
 
-    public void setDocumentName(String documentName) {
+
+    public void setDocumentName(String documentName)
+    {
         this.documentName = documentName;
     }
 
-    public Date getExpiryTime() {
+
+    public Date getExpiryTime()
+    {
         return expiryTime;
     }
 
-    public void setExpiryTime(Date expiryTime) {
+
+    public void setExpiryTime(Date expiryTime)
+    {
         this.expiryTime = expiryTime;
     }
 
-    public Timestamp getCreatedAt() {
+
+    public Timestamp getCreatedAt()
+    {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+
+    public void setCreatedAt(Timestamp createdAt)
+    {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdatedAt() {
+
+    public Timestamp getUpdatedAt()
+    {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+
+    public void setUpdatedAt(Timestamp updatedAt)
+    {
         this.updatedAt = updatedAt;
     }
 }
