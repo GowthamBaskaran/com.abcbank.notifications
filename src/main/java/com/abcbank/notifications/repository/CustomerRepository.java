@@ -16,6 +16,12 @@ import java.util.Map;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long>
 {
-    @Query("SELECT c FROM Customer c WHERE DATE(c.expiryTime) = :specificDate")
+    @Query("SELECT c FROM Customer c " +
+            "JOIN c.documents d " +
+            "WHERE DATE(d.expiryTime) = :specificDate " +
+            "AND c NOT IN (" +
+            "   SELECT DISTINCT nh.customer FROM NotificationHistory nh " +
+            "   WHERE DATE(nh.timestamp) = CURRENT_DATE)"
+    )
     List<Customer> getDocumentsByDateDifference(@Param("specificDate") LocalDate expiryDate);
 }
